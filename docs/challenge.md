@@ -2,7 +2,7 @@
 
 Los gráficos de distribución de los datos se optimizaron para una mejor compresión, por ejemplo en algunos casos se ordenó los resultados de mayor a menor para ver las cantidades de vuelos por por aerolinea, cantidad de vuelos por destino, etc.
 
-Se obvió la función sns.set() que está obsoleta, en su lugar me enfoqué a ordenar los resultados y utilizar colores que permitan visualizar de mejor forma los gráficos.
+Se obvió la función sns.set() que está obsoleta, en su lugar me enfoqué a ordenar los resultados y utilizar colores que permitan visualizar de mejor manera los gráficos.
 
 
 ## Optimización en la generación de features
