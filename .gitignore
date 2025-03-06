@@ -3,3 +3,7 @@
 .venv
 env/
 venv/
+
+#gitflow
+gitflow-installer.sh
+gitflow
