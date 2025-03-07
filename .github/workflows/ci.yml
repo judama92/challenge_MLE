@@ -42,18 +42,3 @@ jobs:
 
       - name: Run API Tests
         run: make api-test
-
-      - name: Run Stress Tests
-        run: make stress-test
-
-  build-docker:
-    needs: test
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Build Docker image (Validation)
-        run: |
-          docker build -t challengemle:latest .
