@@ -10,12 +10,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Print environment variables
-        run: |
-          echo "REGISTRY_HOST: ${secrets.REGISTRY_HOST}"
-          echo "PROJECT_ID: ${secrets.PROJECT_ID}"
-          echo "IMAGE_NAME: ${secrets.IMAGE_NAME}"
-          echo "GITHUB_SHA: ${secrets.GITHUB_SHA}"
+      #- name: Print environment variables
+        #run: |
+        #  echo "REGISTRY_HOST: ${secrets.REGISTRY_HOST}"
+        #  echo "PROJECT_ID: ${secrets.PROJECT_ID}"
+        #  echo "IMAGE_NAME: ${secrets.IMAGE_NAME}"
+        #  echo "GITHUB_SHA: ${secrets.GITHUB_SHA}"
           
       - name: Checkout code
         uses: actions/checkout@v3
