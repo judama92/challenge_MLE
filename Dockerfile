@@ -14,5 +14,3 @@ COPY challenge/delay_model.pkl /delaymodel
 EXPOSE 8080
 
 CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8080"]
-
-# put you docker configuration here
