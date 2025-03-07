@@ -12,4 +12,4 @@ gitflow-installer.sh
 .gitflow/
 
 #image
-./challenge/backup_model.txt
+challenge/backup_model.txt
