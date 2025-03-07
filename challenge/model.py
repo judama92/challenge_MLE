@@ -6,7 +6,7 @@ from xgboost import XGBClassifier
 from sklearn.model_selection import train_test_split
 from datetime import datetime
 
-MODEL_PATH = "/workspaces/challenge_MLE/challenge/delay_model.pkl"
+MODEL_PATH = "challenge/delay_model.pkl"
 
 class DelayModel:
 

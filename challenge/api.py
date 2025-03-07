@@ -9,7 +9,7 @@ from challenge.model import DelayModel
 app = fastapi.FastAPI()
 
 model = DelayModel()
-model.load_model("/workspaces/challenge_MLE/challenge/delay_model.pkl")
+model.load_model("challenge/delay_model.pkl")
 valid_airlines = [
     'American Airlines', 'Air Canada', 'Air France', 'Aeromexico', 'Aerolineas Argentinas',
     'Austral', 'Avianca', 'Alitalia', 'British Airways', 'Copa Air', 'Delta Air', 'Gol Trans',
