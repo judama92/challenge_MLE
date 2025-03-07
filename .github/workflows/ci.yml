@@ -11,7 +11,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest  # Puedes cambiarlo por tu OS detectado
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
@@ -57,7 +57,7 @@ jobs:
         run: make stress-test
 
   build-docker:
-    needs: test  # Solo se ejecuta si las pruebas pasan
+    needs: test
     runs-on: ubuntu-latest
 
     steps:
