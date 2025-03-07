@@ -10,3 +10,6 @@ google-cloud-sdk/
 #gitflow
 gitflow-installer.sh
 .gitflow/
+
+#image
+challenge/delay_model.pkl

@@ -13,8 +13,9 @@ class DelayModel:
     def __init__(
         self
     ):
+        #self._model = self.load_model('/workspaces/challenge_MLE/challenge/delay_model.pkl')
         self.model_path = MODEL_PATH
-        self._model = self.load_model(MODEL_PATH)
+        self._model = self.load_model(self.model_path)
         self.top_10_features = [
             "OPERA_Latin American Wings", 
             "MES_7",
@@ -145,7 +146,20 @@ class DelayModel:
         Args:
             filepath (str): path to load the model from.
         """
-        print(filepath)
         with open(filepath, 'rb') as f:
             return pickle.load(f)
 
+def main():
+    data = pd.read_csv("/workspaces/challenge_MLE/data/data.csv")
+    model = DelayModel()
+    features, target = model.preprocess(data, target_column="delay")
+    model.fit(features, target)
+    model.save_model("/workspaces/challenge_MLE/challenge/delay_model.pkl")
+    model.load_model("/workspaces/challenge_MLE/challenge/delay_model.pkl")
+    sample_features = features.iloc[:5]
+    predictions = model.predict(sample_features)
+
+    print("Predicciones en muestras de prueba:", predictions)
+
+if __name__ == "__main__":
+    main()
