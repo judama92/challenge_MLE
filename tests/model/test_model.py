@@ -90,7 +90,7 @@ class TestModel(unittest.TestCase):
     def test_model_predict(
         self
     ):
-        self.model.load_model("/workspaces/challenge_MLE/challenge/delay_model.pkl")
+        self.model.load_model("challenge/delay_model.pkl")
 
         features = self.model.preprocess(
             data=self.data
