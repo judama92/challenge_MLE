@@ -28,21 +28,21 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ${secrets.REGISTRY_HOST}/${secrets.PROJECT_ID}/${secrets.IMAGE_NAME}:${secrets.GITHUB_SHA} .
+          docker build -t ${{secrets.REGISTRY_HOST}}/${{secrets.PROJECT_ID}}/${{secrets.IMAGE_NAME}}:${{secrets.GITHUB_SHA}} .
 
       - name: Authenticate Docker to Artifact Registry
         run: |
-          gcloud auth configure-docker ${secrets.REGISTRY_HOST} --quiet
+          gcloud auth configure-docker ${{secrets.REGISTRY_HOST}} --quiet
 
       - name: Push Docker image to Artifact Registry
         run: |
-          docker push ${secrets.REGISTRY_HOST}/${secrets.PROJECT_ID}/${secrets.IMAGE_NAME}:${secrets.GITHUB_SHA}
+          docker push ${{secrets.REGISTRY_HOST}}/${{secrets.PROJECT_ID}}/${{secrets.IMAGE_NAME}}:${{secrets.GITHUB_SHA}}
 
       - name: Deploy to Cloud Run
         run: |
-          gcloud run deploy ${secrets.CLOUD_RUN_SERVICE_NAME} \
-            --image ${secrets.REGISTRY_HOST}/${secrets.PROJECT_ID}/${secrets.IMAGE_NAME}:${secrets.GITHUB_SHA} \
-            --region ${secrets.REGION} \
+          gcloud run deploy ${{secrets.CLOUD_RUN_SERVICE_NAME}} \
+            --image ${{secrets.REGISTRY_HOST}}/${{secrets.PROJECT_ID}}/${{secrets.IMAGE_NAME}}:${{secrets.GITHUB_SHA}} \
+            --region ${{secrets.REGION}} \
             --platform managed \
             --allow-unauthenticated
       
