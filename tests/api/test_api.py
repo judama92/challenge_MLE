@@ -1,4 +1,5 @@
 import unittest
+from unittest.mock import patch
 
 from fastapi.testclient import TestClient
 from challenge import app
@@ -7,8 +8,11 @@ from challenge import app
 class TestBatchPipeline(unittest.TestCase):
     def setUp(self):
         self.client = TestClient(app)
-        
-    def test_should_get_predict(self):
+    
+
+    @patch("challenge.model.DelayModel.predict")
+    def test_should_get_predict(self, mock_predict):
+        mock_predict.return_value = [0]
         data = {
             "flights": [
                 {
@@ -23,7 +27,6 @@ class TestBatchPipeline(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json(), {"predict": [0]})
     
-
     def test_should_failed_unkown_column_1(self):
         data = {       
             "flights": [

@@ -80,7 +80,6 @@ class DelayModel:
             or
             pd.DataFrame: features.
         """
-        print(data.head())
         if target_column:
             target = self.delay(data, target_column)
         
@@ -89,11 +88,7 @@ class DelayModel:
             pd.get_dummies(data['TIPOVUELO'], prefix='TIPOVUELO'),
             pd.get_dummies(data['MES'], prefix='MES')
         ], axis=1)
-        print("22222222222222222222222")
-        print(features.head())
         features = features.reindex(columns=self.top_10_features, fill_value=0)
-        print("333333333333333333333")
-        print(features.head())
         return (features, target) if target_column else features
 
     def fit(
