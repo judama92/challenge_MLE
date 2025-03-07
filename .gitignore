@@ -12,4 +12,4 @@ gitflow-installer.sh
 .gitflow/
 
 #image
-challenge/delay_model.pkl
+./challenge/backup_model.txt
