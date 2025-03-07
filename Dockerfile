@@ -6,10 +6,7 @@ WORKDIR /delaymodel
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
-COPY challenge/model.py /delaymodel
-COPY challenge/__init__.py /delaymodel
-COPY challenge/api.py /delaymodel
-COPY challenge/delay_model.pkl /delaymodel
+COPY challenge/*.py /delaymodel
 
 EXPOSE 8080
 

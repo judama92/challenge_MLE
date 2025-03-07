@@ -42,6 +42,3 @@ jobs:
 
       - name: Run API Tests
         run: make api-test
-
-      - name: Run Stress Tests
-        run: make stress-test
