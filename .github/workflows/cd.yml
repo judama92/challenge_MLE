@@ -10,13 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      #- name: Print environment variables
-        #run: |
-        #  echo "REGISTRY_HOST: ${secrets.REGISTRY_HOST}"
-        #  echo "PROJECT_ID: ${secrets.PROJECT_ID}"
-        #  echo "IMAGE_NAME: ${secrets.IMAGE_NAME}"
-        #  echo "GITHUB_SHA: ${secrets.GITHUB_SHA}"
-          
+    
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -28,20 +22,21 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ${{secrets.REGISTRY_HOST}}/${{secrets.PROJECT_ID}}/${{secrets.IMAGE_NAME}}:${{secrets.GITHUB_SHA}} .
-
+          docker build --pull --rm -f Dockerfile -t ${{secrets.IMAGE_NAME}}:${{secrets.GITHUB_SHA}} .
+          docker tag ${{secrets.IMAGE_NAME}}:${{secrets.GITHUB_SHA}} ${{secrets.REGISTRY_HOST}}/${{secrets.PROJECT_ID}}/${{ARTIFACT_REGISTRY}}/${{secrets.IMAGE_NAME}}:${{secrets.GITHUB_SHA}}
+          
       - name: Authenticate Docker to Artifact Registry
         run: |
           gcloud auth configure-docker ${{secrets.REGISTRY_HOST}} --quiet
 
       - name: Push Docker image to Artifact Registry
         run: |
-          docker push ${{secrets.REGISTRY_HOST}}/${{secrets.PROJECT_ID}}/${{secrets.IMAGE_NAME}}:${{secrets.GITHUB_SHA}}
+          docker push ${{secrets.REGISTRY_HOST}}/${{secrets.PROJECT_ID}}/${{ARTIFACT_REGISTRY}}/${{secrets.IMAGE_NAME}}:${{secrets.GITHUB_SHA}}
 
       - name: Deploy to Cloud Run
         run: |
           gcloud run deploy ${{secrets.CLOUD_RUN_SERVICE_NAME}} \
-            --image ${{secrets.REGISTRY_HOST}}/${{secrets.PROJECT_ID}}/${{secrets.IMAGE_NAME}}:${{secrets.GITHUB_SHA}} \
+            --image ${{secrets.REGISTRY_HOST}}/${{secrets.PROJECT_ID}}/${{ARTIFACT_REGISTRY}}/${{secrets.IMAGE_NAME}}:${{secrets.GITHUB_SHA}} \
             --region ${{secrets.REGION}} \
             --platform managed \
             --allow-unauthenticated
