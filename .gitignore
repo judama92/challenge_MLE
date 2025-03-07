@@ -1,0 +1,15 @@
+# enviroments
+.env
+.venv
+env/
+venv/
+google-cloud-cli-linux-x86_64.tar.gz
+.google-cloud-sdk/
+google-cloud-sdk/
+
+#gitflow
+gitflow-installer.sh
+.gitflow/
+
+#image
+challenge/backup_model.txt
