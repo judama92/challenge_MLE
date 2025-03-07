@@ -27,7 +27,7 @@ jobs:
         run: docker tag ${{ secrets.IMAGE_NAME}}:latest ${{ secrets.REGISTRY_HOST}}/${{ secrets.GCP_PROJECT_ID}}/${{ secrets.ARTIFACT_REGISTRY}}/${{ secrets.IMAGE_NAME}}:latest
           
       - name: Authenticate Docker to Artifact Registry
-        run: gcloud auth configure-docker ${{secrets.REGISTRY_HOST}} --quiet
+        run: gcloud auth configure-docker ${{secrets.REGISTRY_HOST}}
 
       - name: Push Docker image to Artifact Registry
         run: docker push ${{secrets.REGISTRY_HOST}}/${{secrets.GCP_PROJECT_ID}}/${{secrets.ARTIFACT_REGISTRY}}/${{secrets.IMAGE_NAME}}:latest
@@ -37,8 +37,14 @@ jobs:
           gcloud run deploy ${{secrets.CLOUD_RUN_SERVICE_NAME}} \
             --image ${{secrets.REGISTRY_HOST}}/${{secrets.GCP_PROJECT_ID}}/${{secrets.ARTIFACT_REGISTRY}}/${{secrets.IMAGE_NAME}}:latest \
             --region ${{secrets.REGION}} \
-            --platform managed \
-            --allow-unauthenticated
+            --platform=managed \
+            --allow-unauthenticated \
+            --memory=1Gi \
+            --cpu=2 \
+            --max-instances=10 \
+            --min-instances=1 \
+            --concurrency=10 \
+            --timeout=60s
       
       - name: Run Stress Tests
         run: make stress-test
