@@ -20,7 +20,7 @@ jobs:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
           credentials: ${{ secrets.GCP_CREDENTIALS }}
 
-      - name: Build Docker image
+      - name: Build Docker image #
         run: |
           docker build --pull --rm -t ${{ secrets.IMAGE_NAME}}:latest .
       
