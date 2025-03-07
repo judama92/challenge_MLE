@@ -3,13 +3,20 @@ name: 'Continuous Delivery'
 on:
   push:
     branches:
-      - main
+      - dev
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Print environment variables
+        run: |
+          echo "REGISTRY_HOST: ${REGISTRY_HOST}"
+          echo "PROJECT_ID: ${PROJECT_ID}"
+          echo "IMAGE_NAME: ${IMAGE_NAME}"
+          echo "GITHUB_SHA: ${GITHUB_SHA}"
+          
       - name: Checkout code
         uses: actions/checkout@v3
 
