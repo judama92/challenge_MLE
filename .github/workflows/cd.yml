@@ -38,8 +38,6 @@ jobs:
       #    docker push $DOCKER_IMAGE   
 
       - name: Deploy to Cloud Run
-        env: 
-          GOOGLE_PROJECT: ${{ secrets.GCP_PROJECT_ID}}
         run: |
           gcloud run deploy ${{secrets.CLOUD_RUN_SERVICE_NAME}} \
             --image ${{secrets.REGISTRY_HOST}}/${{secrets.GCP_PROJECT_ID}}/${{secrets.ARTIFACT_REGISTRY}}/${{secrets.IMAGE_NAME}}:latest \
