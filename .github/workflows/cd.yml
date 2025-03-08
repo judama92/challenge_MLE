@@ -23,9 +23,7 @@ jobs:
           export_default_credentials: true
 
       - name: Authenticate Docker to Artifact Registry
-        run: |
-          echo ${{ secrets.GCP_CREDENTIALS }} > $HOME/gcp-credentials.json
-          gcloud auth activate-service-account --key-file=$HOME/gcp-credentials.json
+        run: gcloud auth activate-service-account github-actions@centered-carver-337623.iam.gserviceaccount.com --key-file=$HOME/gcp-credentials.json
 
       - name: Build Docker image
         run: docker build --pull --rm -t ${{ secrets.IMAGE_NAME}}:latest .
