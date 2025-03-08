@@ -10,8 +10,7 @@ __MACOSX/
 
 #gitflow
 gitflow-installer.sh
-.gitflow/
+gitflow/
 
 #image
-./challenge/backup_model.txt
-/challenge/backup_model.txt
+challenge/backup_model.txt
