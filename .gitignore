@@ -6,10 +6,12 @@ venv/
 google-cloud-cli-linux-x86_64.tar.gz
 .google-cloud-sdk/
 google-cloud-sdk/
+__MACOSX/
 
 #gitflow
 gitflow-installer.sh
 .gitflow/
 
 #image
-challenge/backup_model.txt
+./challenge/backup_model.txt
+/challenge/backup_model.txt
