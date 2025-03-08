@@ -7,20 +7,23 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
 
       - name: Checkout
         uses: actions/checkout@v4.1.1
 
-      - name: Set up Google Cloud SDK
-        uses: google-github-actions/setup-gcloud@v2
+      - name: Authenticate with Google Cloud
+        uses: google-github-actions/auth@v2
         with:
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
-          #service_account_key: ${{ secrets.GCP_CREDENTIALS }}
-          credentials: ${{ secrets.GCP_CREDENTIALS }}
-          export_default_credentials: true
+          credentials_json: "${{ secrets.GCP_CREDENTIALS }}"
+      
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Use gcloud CLI
+        run: gcloud info
 
       - name: Authenticate Docker to Artifact Registry
         run: gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
@@ -30,26 +33,15 @@ jobs:
       
       - name: Docker tag image
         run: docker tag ${{ secrets.IMAGE_NAME}}:latest ${{ secrets.REGISTRY_HOST}}/${{ secrets.GCP_PROJECT_ID}}/${{ secrets.ARTIFACT_REGISTRY}}/${{ secrets.IMAGE_NAME}}:latest
-          
-      #- name: Authenticate Docker to Artifact Registry
-      #  run: gcloud auth print-access-token \
-      #        --impersonate-service-account github-actions@centered-carver-337623.iam.gserviceaccount.com | docker login \
-      #        -u oauth2accesstoken \
-      #        --password-stdin https://us-central1-docker.pkg.dev
-        #gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://us-central1-docker.pkg.dev
-        #sudo gcloud auth configure-docker ${{secrets.REGISTRY_HOST}}/${{ secrets.GCP_PROJECT_ID}}/${{ secrets.ARTIFACT_REGISTRY}}
-          
-      #- name: Authenticate Docker to Artifact Registry
-      #  run: |
-      #    gcloud auth configure-docker ${{secrets.REGISTRY_HOST}}/${{ secrets.GCP_PROJECT_ID}}/${{ secrets.ARTIFACT_REGISTRY}}
 
       - name: Push Docker image to Artifact Registry #
         env: 
           GOOGLE_PROJECT: ${{ secrets.GCP_PROJECT_ID}}
-        run:  docker push us-central1-docker.pkg.dev/centered-carver-337623/challengelatam/challengemle:latest
-              #docker push ${{ secrets.REGISTRY_HOST}}/${{ secrets.GCP_PROJECT_ID}}/${{ secrets.ARTIFACT_REGISTRY}}/${{ secrets.IMAGE_NAME}}:latest
-              #docker push ${{secrets.REGISTRY_HOST}}/${{secrets.GCP_PROJECT_ID}}/${{secrets.ARTIFACT_REGISTRY}}/${{secrets.IMAGE_NAME}}:latest
-              #docker push gcr.io/PROJECT_ID/MY_IMAGE:$GIT_TAG
+        run:  |
+          DOCKER_IMAGE="us-central1-docker.pkg.dev/${GOOGLE_PROJECT}/${{secrets.ARTIFACT_REGISTRY}}/${{ secrets.IMAGE_NAME}}:latest"
+          gcloud auth configure-docker us-central1-docker.pkg.dev
+          docker build -t $DOCKER_IMAGE .
+          docker push $DOCKER_IMAGE
 
       - name: Deploy to Cloud Run
         run: |
