@@ -32,10 +32,10 @@ jobs:
       - name: Docker tag image
         run: docker tag ${{ secrets.IMAGE_NAME}}:latest ${{ secrets.REGISTRY_HOST}}/${{ secrets.GCP_PROJECT_ID}}/${{ secrets.ARTIFACT_REGISTRY}}/${{ secrets.IMAGE_NAME}}:latest
           
-      - name: Authenticate Docker to Artifact Registry
-        run: |
-          echo "gcloud auth configure-docker"
-          gcloud auth configure-docker ${{secrets.REGISTRY_HOST}}/${{ secrets.GCP_PROJECT_ID}}/${{ secrets.ARTIFACT_REGISTRY}}
+      #- name: Authenticate Docker to Artifact Registry
+      #  run: |
+      #    echo "gcloud auth configure-docker"
+      #    gcloud auth configure-docker ${{secrets.REGISTRY_HOST}}/${{ secrets.GCP_PROJECT_ID}}/${{ secrets.ARTIFACT_REGISTRY}}
           
         
 
