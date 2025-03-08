@@ -28,14 +28,14 @@ jobs:
       - name: Authenticate Docker to Artifact Registry
         run: gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
 
-      - name: Push Docker image to Artifact Registry
-        env: 
-          GOOGLE_PROJECT: ${{ secrets.GCP_PROJECT_ID}}
-        run:  |
-          DOCKER_IMAGE="us-central1-docker.pkg.dev/${GOOGLE_PROJECT}/${{secrets.ARTIFACT_REGISTRY}}/${{ secrets.IMAGE_NAME}}:latest"
-          gcloud auth configure-docker us-central1-docker.pkg.dev
-          docker build -t $DOCKER_IMAGE .
-          docker push $DOCKER_IMAGE
+      #- name: Push Docker image to Artifact Registry
+      #  env: 
+      #    GOOGLE_PROJECT: ${{ secrets.GCP_PROJECT_ID}}
+      #  run:  |
+      #    DOCKER_IMAGE="us-central1-docker.pkg.dev/${GOOGLE_PROJECT}/${{secrets.ARTIFACT_REGISTRY}}/${{ secrets.IMAGE_NAME}}:latest"
+      #    gcloud auth configure-docker us-central1-docker.pkg.dev
+      #    docker build -t $DOCKER_IMAGE .
+      #    docker push $DOCKER_IMAGE
 
       - name: Deploy to Cloud Run
         env: 
