@@ -41,7 +41,7 @@ jobs:
       - name: Push Docker image to Artifact Registry #
         env: 
           GOOGLE_PROJECT: ${{ secrets.GCP_PROJECT_ID}}
-        run:  gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://us-central1-docker.pkg.dev
+        run:  echo ${{ secrets.GCP_CREDENTIALS }} > ./google-credentials.json && gcloud auth login --brief --cred-file=./google-credentials.json --update-adc gcloud auth configure-docker --quiet
               docker push us-central1-docker.pkg.dev/centered-carver-337623/challengelatam/challengemle:latest
               #docker push ${{ secrets.REGISTRY_HOST}}/${{ secrets.GCP_PROJECT_ID}}/${{ secrets.ARTIFACT_REGISTRY}}/${{ secrets.IMAGE_NAME}}:latest
               #docker push ${{secrets.REGISTRY_HOST}}/${{secrets.GCP_PROJECT_ID}}/${{secrets.ARTIFACT_REGISTRY}}/${{secrets.IMAGE_NAME}}:latest
