@@ -41,7 +41,6 @@ jobs:
         env: 
           GOOGLE_PROJECT: ${{ secrets.GCP_PROJECT_ID}}
         run: |
-          gcloud auth configure-docker us-central1-docker.pkg.dev --quiet
           gcloud run deploy ${{secrets.CLOUD_RUN_SERVICE_NAME}} \
             --image ${{secrets.REGISTRY_HOST}}/${{secrets.GCP_PROJECT_ID}}/${{secrets.ARTIFACT_REGISTRY}}/${{secrets.IMAGE_NAME}}:latest \
             --region ${{secrets.REGION}} \
