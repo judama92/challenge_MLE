@@ -27,11 +27,11 @@ jobs:
       - name: Docker tag image
         run: docker tag ${{ secrets.IMAGE_NAME}}:latest ${{ secrets.REGISTRY_HOST}}/${{ secrets.GCP_PROJECT_ID}}/${{ secrets.ARTIFACT_REGISTRY}}/${{ secrets.IMAGE_NAME}}:latest
           
-      - name: Authenticate Docker to Artifact Registry
-        run: gcloud auth print-access-token \
-              --impersonate-service-account github-actions@centered-carver-337623.iam.gserviceaccount.com | docker login \
-              -u oauth2accesstoken \
-              --password-stdin https://us-central1-docker.pkg.dev
+      #- name: Authenticate Docker to Artifact Registry
+      #  run: gcloud auth print-access-token \
+      #        --impersonate-service-account github-actions@centered-carver-337623.iam.gserviceaccount.com | docker login \
+      #        -u oauth2accesstoken \
+      #        --password-stdin https://us-central1-docker.pkg.dev
         #gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://us-central1-docker.pkg.dev
         #sudo gcloud auth configure-docker ${{secrets.REGISTRY_HOST}}/${{ secrets.GCP_PROJECT_ID}}/${{ secrets.ARTIFACT_REGISTRY}}
           
@@ -40,8 +40,8 @@ jobs:
       - name: Push Docker image to Artifact Registry #
         env: 
           GOOGLE_PROJECT: ${{ secrets.GCP_PROJECT_ID}}
-        run:  gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://us-west3-docker.pkg.dev
-              #docker push us-central1-docker.pkg.dev/centered-carver-337623/challengelatam/challengemle:latest
+        run:  gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://us-central1-docker.pkg.dev
+              docker push us-central1-docker.pkg.dev/centered-carver-337623/challengelatam/challengemle:latest
               #docker push ${{ secrets.REGISTRY_HOST}}/${{ secrets.GCP_PROJECT_ID}}/${{ secrets.ARTIFACT_REGISTRY}}/${{ secrets.IMAGE_NAME}}:latest
               #docker push ${{secrets.REGISTRY_HOST}}/${{secrets.GCP_PROJECT_ID}}/${{secrets.ARTIFACT_REGISTRY}}/${{secrets.IMAGE_NAME}}:latest
               #docker push gcr.io/PROJECT_ID/MY_IMAGE:$GIT_TAG
