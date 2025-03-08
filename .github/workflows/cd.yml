@@ -23,7 +23,8 @@ jobs:
         uses: google-github-actions/setup-gcloud@v2
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
-          credentials: ${{ secrets.GCP_CREDENTIALS }}
+          service_account_key: ${{ secrets.GCP_CREDENTIALS }}
+          export_default_credentials: true
 
       - name: Build Docker image
         run: docker build --pull --rm -t ${{ secrets.IMAGE_NAME}}:latest .
@@ -38,7 +39,7 @@ jobs:
           
         
 
-      - name: Push Docker image to Artifact Registry
+      - name: Push Docker image to Artifact Registry #
         env: 
           GOOGLE_PROJECT: ${{ secrets.GCP_PROJECT_ID}}
         run:  docker push ${{ secrets.REGISTRY_HOST}}/${{ secrets.GCP_PROJECT_ID}}/${{ secrets.ARTIFACT_REGISTRY}}/${{ secrets.IMAGE_NAME}}:latest
