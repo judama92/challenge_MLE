@@ -11,9 +11,13 @@ Se obvió la **función sns.set() que está obsoleta**, en su lugar **me enfoqu�
 Se identificó que la función **get_period_day no consideraba las horas de los rangos**, por ejemplo, cuando se validaba si la hora es mayor a 05:00, si por casualidad se evaluaba una hora 05:00 no entraba en la condición y asinaba como valor None.
 Este problema se solucionó agregando a las condiciones "mayor o igual" o "menor o igual" para que las condiciones consideren las horas los extremos de los rangos horarios.
 
+![alt text](getperiododay.png)
+
 ### Función is_high_season
 Tal y como estaba implementada la función, **no asignaba el valor de 1 a las fechas del 31-Dec**, se tuvo que hacer una reingeniería de la función.
 La solución que propongo es validar las fechas en base a rangos de fecha, por ejemplo, un rango es ((12, 15), (12, 31)) esto permitirá validar si una fecha se encuentra entre el 15-Dic y el 31-Dic.
+
+![alt text](highseason.png)
 
 # Análisis posterior de los datos
 
@@ -56,6 +60,15 @@ Las pruebas fueron claves para validar que las funcionalidades desarrolladas cum
 
 **Las pruebas del modelo, api y stress fueron satisfactorias**, cumpliendo con los estándares de calidad exigas en esta prueba.
 
+### Pruebas del modelo
+![alt text](pruebasmodelo.png)
+
+### Pruebas de la API
+![alt text](pruebasapi.png)
+
+### Pruebas de Stress
+![alt text](pruebasestress.png)
+
 # Integración y Entrega continua
 
 ### Integración Continua
@@ -74,8 +87,12 @@ Si en la empresa existe un equipo de Data Quality Assurance con muchas más faci
 **Actualmente una de las nubes con la que mas vengo trabajando es GCP**, para el proceso de entrega continua consideré dos servicios que permiten disponer de modelos como servicio, **Artifac Registry y Cloud Run**.
 A través de **un proceso automático se construye la imagen Docker** y se **despliega** dicha imagen en el componente **Artifact Registry de GCP**, de esta manera en GCP **versionamos las imagenes de los modelos** y los tenemos en un entorno seguro y de fácil integración con otros componentes para su exposición como servicio.
 
+![alt text](artifact.png)
+
 **Implementé un proceso automático** que permite desplegar en Cloud Run un contenedor con la imagen Docker que previamente se registró en Artifact Registry, **con esto logramos exponer el modelo como un servicio**, listo para su consumo desde otros sistemas.
 Configuré el servicio de contenedores de Cloud Run con los recursos mínimos dado que esto es un proceso de prueba. **Sin embargo para un caso productivo, se debe calcular el sizing requerido para el consumo del modelo.**
+
+![alt text](cloudrun.png)
 
 Para no tener inconvenientes con las versiones de las librerías de Python, **planteo que se implemente una gestión de imagenes Docker** para los distintos casos de uso que el equipo de científicos aborda en su día a día. Entiendo que hay diferentes frameworks que permite a los científicos construir distintos modelos, mi objetivo es mantener un inventario y set de librerías **que permita una mejor gestión en los depliegues de los modelos.** 
 
