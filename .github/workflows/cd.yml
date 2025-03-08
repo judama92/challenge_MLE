@@ -38,7 +38,7 @@ jobs:
           
       - name: Authenticate Docker to Artifact Registry
         run: |
-          echo ${{ secrets.GCP_CREDENTIALS }} | docker login -u _json_key --password-stdin https://us-central1-docker.pkg.dev  
+          gcloud auth configure-docker ${{secrets.REGISTRY_HOST}}/${{ secrets.GCP_PROJECT_ID}}/${{ secrets.ARTIFACT_REGISTRY}}
 
       - name: Push Docker image to Artifact Registry #
         env: 
