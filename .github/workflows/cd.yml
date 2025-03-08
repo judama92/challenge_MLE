@@ -39,7 +39,8 @@ jobs:
 
       - name: Deploy to Cloud Run
         run: |
-          gcloud run deploy ${{secrets.CLOUD_RUN_SERVICE_NAME}} --impersonate-service-account=github-actions@centered-carver-337623.iam.gserviceaccount.com \
+          gcloud run services update challengemle --service-account github-actions@centered-carver-337623.iam.gserviceaccount.com
+          gcloud run deploy ${{secrets.CLOUD_RUN_SERVICE_NAME}} \
             --image ${{secrets.REGISTRY_HOST}}/${{secrets.GCP_PROJECT_ID}}/${{secrets.ARTIFACT_REGISTRY}}/${{secrets.IMAGE_NAME}}:latest \
             --region ${{secrets.REGION}} \
             --platform=managed \
